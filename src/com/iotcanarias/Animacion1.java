@@ -12,7 +12,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+    along with MarcoDigitalRpi.  If not, see <http://www.gnu.org/licenses/>.
 
     Contact: Javier <iotcanarias@gmail.com>
  */
@@ -39,34 +39,37 @@ import javafx.util.Duration;
  * @author raspdroid
  */
 public class Animacion1 {
-
-    // Ancho y Altura de la imagen en píxeles
-    private static final double ANCHO_IMG = 320;
-    private static final double ALTO_IMG = 240;
+    private static double ANCHO;
+    private static double ALTO;
+    private static int NUM_DE_IMGS = 0; 
     
-    private static final int NUM_DE_IMGS = 4; 
+    public static void setNUM_DE_IMGS(int num_de_imgs){
+        NUM_DE_IMGS = num_de_imgs;
+    }
     private static final int FREC_SLIDE = 4; // (en segundos)
     
     public static void start(StackPane root) {
-        
+        // Ancho y Altura de la imagen en píxeles
+        ANCHO = MarcoDigitalRpi.getANCHO();
+        ALTO = MarcoDigitalRpi.getALTO();
         Pane clipPane = new Pane();
         // Para centrar el SlideShow
-        clipPane.setMaxSize(ANCHO_IMG, ALTO_IMG);
-        clipPane.setClip(new Rectangle(ANCHO_IMG, ALTO_IMG));
+        clipPane.setMaxSize(ANCHO, ALTO);
+        clipPane.setClip(new Rectangle(ANCHO, ALTO));
         
         HBox hbox = new HBox();
         
         
         EventHandler<ActionEvent> slideAction = (ActionEvent t) -> {
             TranslateTransition trans = new TranslateTransition(Duration.seconds(1.5), hbox);
-            trans.setByX(-ANCHO_IMG);
+            trans.setByX(-ANCHO);
             trans.setInterpolator(Interpolator.EASE_BOTH);
             trans.play();
         };
 
         EventHandler<ActionEvent> resetAction = (ActionEvent t) -> {
             TranslateTransition trans = new TranslateTransition(Duration.seconds(1), hbox);
-            trans.setByX((NUM_DE_IMGS - 1) * ANCHO_IMG);
+            trans.setByX((NUM_DE_IMGS - 1) * ANCHO);
             trans.setInterpolator(Interpolator.EASE_BOTH);
             trans.play();
         };
@@ -89,7 +92,7 @@ public class Animacion1 {
         clipPane.getChildren().add(hbox);
         root.getChildren().add(clipPane); 
                 
-        Scene scene = new Scene(root, ANCHO_IMG, ALTO_IMG);
+        Scene scene = new Scene(root, ANCHO, ALTO);
         MarcoDigitalRpi.setScene(scene);
     }   
 }

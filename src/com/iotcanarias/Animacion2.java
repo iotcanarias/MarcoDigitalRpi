@@ -12,14 +12,13 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+    along with MarcoDigitalRpi.  If not, see <http://www.gnu.org/licenses/>.
 
     Contact: Javier <iotcanarias@gmail.com>
  */
 package com.iotcanarias;
 
 import com.iotcanarias.utils.Utils;
-import java.util.List;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -27,6 +26,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 /**
@@ -34,16 +34,16 @@ import javafx.util.Duration;
  * @author raspdroid
  */
 public class Animacion2 {
-    
-     // Ancho y Altura de la imagen en píxeles
-    private static final double ANCHO_IMG = 320;
-    private static final double ALTO_IMG = 240;
-    
+    private static double ANCHO;
+    private static double ALTO;
     private static final int DUR_ENTRADA = 2000;
     private static final int DUR_SALIDA = 2000;
     private static final int FREC_SLIDE = 4; // (en segundos)
     
      public static void start(StackPane root) {
+          // Ancho y Altura de la imagen en píxeles
+        ANCHO = MarcoDigitalRpi.getANCHO();
+        ALTO = MarcoDigitalRpi.getALTO();
         SequentialTransition slideshow = new SequentialTransition();
 
          Utils.getImages().stream().forEach((slide) -> {
@@ -61,7 +61,8 @@ public class Animacion2 {
       slideshow.setCycleCount(Timeline.INDEFINITE);
       slideshow.playFromStart();
       
-      Scene scene = new Scene(root, ANCHO_IMG, ALTO_IMG);
+      Scene scene = new Scene(root, ANCHO, ALTO);
+      scene.setFill(Color.TRANSPARENT);
       MarcoDigitalRpi.setScene(scene);
     }
 
@@ -73,6 +74,5 @@ public class Animacion2 {
       ft.setToValue(toValue);
 
       return ft;
-      
     }
 }
